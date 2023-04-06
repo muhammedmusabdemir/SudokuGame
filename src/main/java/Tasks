@@ -1,0 +1,11 @@
+4x4 sudoku
+Bir kareye yazilan rakam yazildigi bulundugu satirda, sutunda ve yazildigi 2x2 lik karede tekrar olamaz
+satirin toplami, sutunun toplami ve rakam yazdigimiz 2x2 lik karenin toplami 10'u gecemez
+bir kareye en fazla 3 defa deneme yapilabilir
+Her satir, sutun ve 2x2 lik karede rastgele 1-4 arasi rakam atilacak
+Yazilan rakam bir kereye mahsus geri alinabilir
+
+
+
+
+
