@@ -1,6 +1,7 @@
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.InputMismatchException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Runner extends Depo {
 
@@ -10,9 +11,6 @@ public class Runner extends Depo {
         giris();
 
 
-
-
-
     }//main
 
     private static void giris() {
@@ -20,16 +18,16 @@ public class Runner extends Depo {
 
         System.out.println("Sudoku oyununa hosgeldiniz...\nLutfen oynamak istediginiz zorlugu seciniz\n1-Basit\n2-Zor");
 
-            secim = scan.next();
+        secim = scan.next();
 
 
         switch (secim) {
             case "1":
                 basit();
-                System.out.println("1");
+                kontrol();
+                break;
             case "2":
                 zor();
-                System.out.println("2");
             default:
                 System.out.println("Hatali secim yaptiniz...");
                 giris();
@@ -60,13 +58,22 @@ public class Runner extends Depo {
         alinanSutunListeleri.add(alinanSutunList8);
         alinanSutunListeleri.add(alinanSutunList9);
 
+        girilenSayiListeleri.add(girilenSayiList1);
+        girilenSayiListeleri.add(girilenSayiList2);
+        girilenSayiListeleri.add(girilenSayiList3);
+        girilenSayiListeleri.add(girilenSayiList4);
+        girilenSayiListeleri.add(girilenSayiList5);
+        girilenSayiListeleri.add(girilenSayiList6);
+        girilenSayiListeleri.add(girilenSayiList7);
+        girilenSayiListeleri.add(girilenSayiList8);
+        girilenSayiListeleri.add(girilenSayiList9);
+
 
     }
 
     private static void basit() {
 
         zorlukDerecesi = 4;
-
         satirSutunSayisi();
 
     }
@@ -80,40 +87,76 @@ public class Runner extends Depo {
 
     private static void satirSutunSayisi() {
 
-        int[][] satirSutunSayisi = new int[zorlukDerecesi][zorlukDerecesi];
-
-        for (int i = 0; i < zorlukDerecesi; i++) {
+        for (int i = 0; i < zorlukDerecesi*zorlukDerecesi; i++) {
 
             satirAlma();
-
             sutunAlma();
             sayiAlma();
 
         }
 
 
-
-        satirSutunSayisi[Integer.parseInt(alinanSatir)-1][Integer.parseInt(alinanSutun)-1]=Integer.parseInt(girilenSayi);
-        System.out.println(Arrays.deepToString(satirSutunSayisi));
-
     }
 
     private static void sayiAlma() {
         System.out.println("Bir sayi giriniz\n" + zorlukDerecesi + " ile 1 arasinda");
 
-        girilenSayi=scan.next();
-        if (Integer.parseInt(girilenSayi)>zorlukDerecesi){
+        girilenSayi = scan.next();
+        if (Integer.parseInt(girilenSayi) > zorlukDerecesi) {
 
             System.out.println("Yanlis giris yaptiniz");
             sayiAlma();
         }
 
-        if (!girilenSayiList.contains(girilenSayi)){
-            girilenSayiList.add(girilenSayi);
+
+
+        if (girilenSayiListeleri.get(Integer.parseInt(girilenSayi)-1).size()!=zorlukDerecesi){
+            girilenSayiListeleri.get(Integer.parseInt(girilenSayi)-1).set(Integer.parseInt(girilenSayi)-1,girilenSayi);
+
 
         }else {
-            System.out.println("Bu sayiyi zaten girdiniz");
+            System.out.println("Daha fazla bu sayiyi kullanmazsiniz");
             sayiAlma();
+        }
+        alinanSatirListeleri.get(Integer.parseInt(alinanSatir)-1).set(Integer.parseInt(alinanSutun)-1,girilenSayi);
+        alinanSutunListeleri.get(Integer.parseInt(alinanSutun)-1).set(Integer.parseInt(alinanSutun)-1,alinanSutun);
+
+
+
+        for (List w : alinanSatirListeleri) {
+            System.out.println(w);
+        }
+
+
+
+
+
+
+
+
+    }
+
+    private static void kontrol() {
+
+        boolean cozumSonuc = true;
+        for (int i = 0; i < zorlukDerecesi ; i++) {
+
+
+            for (int j = 0; j < zorlukDerecesi; j++) {
+
+
+                for (int k = 0; k < zorlukDerecesi; k++) {
+
+                   if (girilenSayiListeleri.get(i).get(j) == girilenSayiListeleri.get(i).get(j+1)){
+                       cozumSonuc=false;
+                    }
+                }
+            }
+        }
+        if (!cozumSonuc){
+            System.out.println("Hatali Cozum :(((");
+        }else {
+            System.out.println("Tebrikler :)))");
         }
 
 
@@ -122,41 +165,42 @@ public class Runner extends Depo {
     private static void sutunAlma() {
         System.out.println("Sutun sayisini giriniz\n" + zorlukDerecesi + " ile 1 arasinda");
 
-        alinanSutun=scan.next();
-        if (Integer.parseInt(alinanSutun)>zorlukDerecesi){
+        alinanSutun = scan.next();
+        if (Integer.parseInt(alinanSutun) > zorlukDerecesi) {
 
             System.out.println("Yanlis giris yaptiniz");
             sutunAlma();
         }
 
-        if (!alinanSutunList.contains(alinanSutun)){
-            alinanSutunList.add(alinanSutun);
+        if (alinanSutunListeleri.get(Integer.parseInt(alinanSutun)-1).size()!=zorlukDerecesi){
+            //alinanSutunListeleri.get(Integer.parseInt(alinanSutun)-1).set(Integer.parseInt(alinanSutun)-1,alinanSutun);
 
         }else {
-            System.out.println("Bu sayiyi zaten girdiniz");
+            System.out.println("Bu sutun doldu");
             sutunAlma();
         }
+
     }
 
     private static void satirAlma() {
 
         System.out.println("Satir sayisini giriniz\n" + zorlukDerecesi + " ile 1 arasinda");
 
-        alinanSatir=scan.next();
-        if (Integer.parseInt(alinanSatir)>zorlukDerecesi){
+        alinanSatir = scan.next();
+        if (Integer.parseInt(alinanSatir) > zorlukDerecesi) {
 
             System.out.println("Yanlis giris yaptiniz");
             satirAlma();
         }
-
-        if (!alinanSatirList.contains(alinanSatir)){
-            alinanSatirList.add(alinanSatir);
-
+        if (alinanSatirListeleri.get(Integer.parseInt(alinanSatir)-1).size()!=zorlukDerecesi){
+            //alinanSatirListeleri.get(Integer.parseInt(alinanSatir)-1).add(alinanSatir);
         }else {
-            System.out.println("Bu sayiyi zaten girdiniz");
+            System.out.println("Bu satir doldu");
             satirAlma();
         }
-        alinanSatirListeleri.get(Integer.parseInt(alinanSatir)).add(alinanSatir);
+
+
+
     }
 
 }//class
