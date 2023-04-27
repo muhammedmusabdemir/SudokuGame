@@ -4,4 +4,8 @@ degisiklikler
 bazi kodlar yazdim
 
 burada cakisma olacak
-diger dev kod yazdi
+
+musab branchi kod yazdi.
+
+
+
