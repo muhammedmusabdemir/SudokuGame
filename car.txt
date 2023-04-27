@@ -1,2 +1,3 @@
 bazi degisiklikler yaptim.
 degisiklikler
+bazi kodlar yazdim
